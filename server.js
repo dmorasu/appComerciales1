@@ -13,10 +13,10 @@ app.use('/resources',express.static(__dirname + 'public'));
 
 // Configuración de la base de datos
 const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'bd_inmobilariogpa'
+    host: '192.168.4.6',
+    user: 'desarrolloti',
+    password: 'd3cr3t05',
+    database: 'bd_inmobiliario'
 });
 
 db.connect((err) => {

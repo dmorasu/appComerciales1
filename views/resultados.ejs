@@ -26,11 +26,17 @@
                 <option value="Finalizado">Finalizado</option>
                 <option value="Desistido">Desistido</option>
                 <option value="En tramite">En tramite</option>
+                <option value="En tramite">Suspendido</option>
+                <option value="En tramite">Cerrado</option>
             </select>
         </div>
         <div class="form-group">
             <label for="searchCaso">Buscar por Número de Caso:</label>
             <input type="text" id="searchCaso" class="form-control" placeholder="Ingrese número de caso">
+        </div>
+        <div class="form-group">
+            <label for="searchCliente">Buscar por Número de Identificación Cliente:</label>
+            <input type="text" id="searchCliente" class="form-control" placeholder="Ingrese número de identificación del Cliente">
         </div>
 
         <table class="table table-bordered table-hover letratabla">
@@ -53,7 +59,7 @@
             <tbody id="tablaClientes">
                 <% clientes.forEach(cliente => { %>
                 <tr>
-                    <td><%= cliente.usuario_cliente %></td>
+                    <td><%= cliente.cedula_cliente %></td>
                     <td><%= cliente.nombre_cliente %></td>
                     <td><%= cliente.fecha %></td>
                     <td><%= cliente.numero_caso %></td>
@@ -74,16 +80,19 @@
     <script>
         document.getElementById('filterEstado').addEventListener('change', filterTable);
         document.getElementById('searchCaso').addEventListener('input', filterTable);
+        document.getElementById('searchCliente').addEventListener('input', filterTable);
 
         function filterTable() {
             var estadoFilter = document.getElementById('filterEstado').value.toLowerCase();
             var searchFilter = document.getElementById('searchCaso').value.toLowerCase();
+            var searchFilterCliente = document.getElementById('searchCliente').value.toLowerCase();
             var table = document.getElementById('tablaClientes');
             var rows = table.getElementsByTagName('tr');
 
             for (var i = 0; i < rows.length; i++) {
                 var estado = rows[i].getElementsByTagName('td')[9].innerText.toLowerCase();
                 var caso = rows[i].getElementsByTagName('td')[3].innerText.toLowerCase();
+                var cedula = rows[i].getElementsByTagName('td')[0].innerText.toLowerCase();
                 var showRow = true;
 
                 if (estadoFilter && estado !== estadoFilter) {
@@ -91,6 +100,9 @@
                 }
 
                 if (searchFilter && !caso.includes(searchFilter)) {
+                    showRow = false;
+                }
+                if (searchFilterCliente && !cedula.includes(searchFilterCliente)) {
                     showRow = false;
                 }
 
